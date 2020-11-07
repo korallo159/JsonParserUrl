@@ -15,10 +15,19 @@ public class Frame extends JFrame implements ActionListener {
     JTextField t1,t2,t3;
     JButton b1;
     public Frame() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         JFrame f= new JFrame("Przelicznik waluty");
         f.setIconImage(imageURL());
-
-
         //Basics
 
         JLabel label = new JLabel("Podaj walute na jaka chcesz przeliczac");
@@ -38,7 +47,6 @@ public class Frame extends JFrame implements ActionListener {
         b1.setBounds(50,200,150,50);
         b1.addActionListener(this);
 
-
         f.add(t1); f.add(t2); f.add(t3); f.add(b1); f.add(label); f.add(label1);
         //background
         JLabel labelbackground = new JLabel(new ImageIcon(imageURL2()));
@@ -47,7 +55,7 @@ public class Frame extends JFrame implements ActionListener {
         //
         f.setSize(270,330);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        f.setResizable(false);
+        f.setResizable(true);
         f.setLocationRelativeTo(null);
         f.setLayout(null);
         f.setVisible(true);
@@ -58,7 +66,7 @@ public class Frame extends JFrame implements ActionListener {
         String currency = t1.getText();
         String base = t2.getText();
         if(e.getSource() == b1){
-           result = Main.currentsApi(currency, base);
+           result = currencyApi.currentsApi(currency, base);
         }
         String resulttext = String.valueOf(result);
         t3.setText(resulttext);
